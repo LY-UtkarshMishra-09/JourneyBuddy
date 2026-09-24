@@ -1,0 +1,171 @@
+{
+  "trips": [
+    {
+      "id": "trip-kyoto",
+      "destination": "Kyoto, Japan",
+      "title": "Kyoto Cherry Blossom Dreams 🌸",
+      "dates": "April 10 - April 14, 2026",
+      "duration": "5 Days",
+      "status": "upcoming",
+      "hotel": "Ryokan Gion Sano",
+      "pace": "Balanced",
+      "budget": "$2,500",
+      "currency": "$",
+      "travellerType": "solo",
+      "travellerCount": 1,
+      "travelStyles": ["Cultural & Historic", "Foodie Trail"],
+      "accommodation": "Cozy Airbnb / Ryokan",
+      "image": "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=700&q=80",
+      "tags": ["🌸 Sakura", "🍵 Matcha", "⛩️ Shrines"]
+    },
+    {
+      "id": "trip-santorini",
+      "destination": "Santorini, Greece",
+      "title": "Amalfi & Aegean Seashells 🐚",
+      "dates": "July 14 - July 20, 2026",
+      "duration": "7 Days",
+      "status": "upcoming",
+      "hotel": "Canaves Oia Suites",
+      "pace": "Relaxed & Chilled",
+      "budget": "€3,200",
+      "currency": "€",
+      "travellerType": "couple",
+      "travellerCount": 2,
+      "travelStyles": ["Beach & Chill", "Romantic"],
+      "accommodation": "Luxury Beach Resort",
+      "image": "https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=700&q=80",
+      "tags": ["🌊 Beach", "🌅 Sunsets", "🍷 Wine"]
+    },
+    {
+      "id": "trip-bali",
+      "destination": "Bali, Indonesia",
+      "title": "Ubud Rice Terrace & Coffee 🌴",
+      "dates": "November 05 - November 12, 2025",
+      "duration": "8 Days",
+      "status": "completed",
+      "hotel": "Bambu Indah Eco Resort",
+      "pace": "Balanced",
+      "budget": "$1,800",
+      "currency": "$",
+      "travellerType": "friends",
+      "travellerCount": 3,
+      "travelStyles": ["Adventure", "Foodie Trail"],
+      "accommodation": "Cozy Airbnb / Ryokan",
+      "image": "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=700&q=80",
+      "tags": ["🥥 Coconuts", "🧘 Yoga", "🌿 Waterfalls"]
+    }
+  ],
+  "itinerary": {
+    "trip-kyoto": {
+      "1": {
+        "city": "Kyoto, Kansai Region",
+        "hotel": "Ryokan Gion Sano (Tatami & Garden View)",
+        "morning": [
+          { "id": "m1", "time": "08:30 AM", "title": "Arrival at Kyoto Station & Eki Bento 🍱", "desc": "Pick up IC transit card and savor seasonal bento breakfast.", "cost": "$14", "tags": ["Food", "Transit"], "done": true },
+          { "id": "m2", "time": "10:30 AM", "title": "Check into Traditional Ryokan in Gion", "desc": "Drop heavy bags, enjoy welcome roasted green tea and sweets.", "cost": "Included", "tags": ["Relax"], "done": true }
+        ],
+        "afternoon": [
+          { "id": "a1", "time": "01:00 PM", "title": "Kiyomizu-dera Wooden Stage & City Vista 🏯", "desc": "Walk up Matsubara street, drink from Otowa spring fountain.", "cost": "$6", "tags": ["Temple", "Views"], "done": false },
+          { "id": "a2", "time": "03:30 PM", "title": "Sannenzaka & Ninenzaka Traditional Lanes", "desc": "Browse handcrafted ceramics, incense, and soft matcha soft-serve.", "cost": "$8", "tags": ["Walk", "Cafe"], "done": false }
+        ],
+        "evening": [
+          { "id": "e1", "time": "06:00 PM", "title": "Lantern-Lit Gion Geisha District Stroll 🏮", "desc": "Spot lanterns reflected on cobblestones and wooden teahouses.", "cost": "Free", "tags": ["Atmosphere"], "done": false },
+          { "id": "e2", "time": "07:30 PM", "title": "Cozy Kaiseki Multi-Course Dinner", "desc": "Tasting seasonal tofu, bamboo shoots, and Kyoto beef skewers.", "cost": "$55", "tags": ["Dinner"], "done": false }
+        ]
+      },
+      "2": {
+        "city": "Arashiyama Bamboo Grove",
+        "hotel": "Ryokan Gion Sano (Tatami & Garden View)",
+        "morning": [
+          { "id": "m21", "time": "07:30 AM", "title": "Early Morning Stroll in Arashiyama Bamboo Grove 🎋", "desc": "Catch the golden hour breeze before tourist crowds arrive.", "cost": "Free", "tags": ["Nature", "Photo"], "done": false },
+          { "id": "m22", "time": "09:30 AM", "title": "Tenryu-ji Zen Garden & Dragon Ceiling 🐉", "desc": "Meditate by the pond surrounded by pine trees and weeping cherry.", "cost": "$7", "tags": ["Zen"], "done": false }
+        ],
+        "afternoon": [
+          { "id": "a21", "time": "12:30 PM", "title": "Togetsukyo Bridge & Riverbank Bento Picnic 🍙", "desc": "Riverside onigiri and iced hojicha tea watching wooden boats.", "cost": "$12", "tags": ["Picnic"], "done": false },
+          { "id": "a22", "time": "02:30 PM", "title": "Iwatayama Monkey Park Hike 🐒", "desc": "Short scenic 20-min hike up the hill for panoramic views of Kyoto.", "cost": "$6", "tags": ["Hike", "Views"], "done": false }
+        ],
+        "evening": [
+          { "id": "e21", "time": "06:30 PM", "title": "Yudofu Hot-Pot Dinner at Sagano 🍲", "desc": "Simmered silk tofu in kelp broth with ginger, scallions, and yuzu sauce.", "cost": "$30", "tags": ["Specialty"], "done": false },
+          { "id": "e22", "time": "08:30 PM", "title": "Foot Bath Cafe (Ashi-yu) Experience", "desc": "Soak feet in hot mineral springs while sipping peach soda.", "cost": "$10", "tags": ["Cozy"], "done": false }
+        ]
+      },
+      "3": {
+        "city": "Southern Kyoto & Uji",
+        "hotel": "Ryokan Gion Sano (Tatami & Garden View)",
+        "morning": [
+          { "id": "m31", "time": "07:00 AM", "title": "Fushimi Inari-taisha Senbon Torii Hike ⛩️", "desc": "Hike through 10,000 orange shrine gates winding through sacred mount Inari.", "cost": "Free", "tags": ["Must-See", "Hike"], "done": false }
+        ],
+        "afternoon": [
+          { "id": "a31", "time": "12:30 PM", "title": "Train ride to Uji (Matcha Capital) 🍵", "desc": "Visit Byodoin Phoenix Hall featured on the 10-yen coin.", "cost": "$8", "tags": ["Culture"], "done": false },
+          { "id": "a32", "time": "03:00 PM", "title": "Authentic Matcha Whisking Workshop", "desc": "Learn ceremonial tea preparation with traditional wagashi confectionery.", "cost": "$25", "tags": ["Workshop"], "done": false }
+        ],
+        "evening": [
+          { "id": "e31", "time": "06:30 PM", "title": "Pontocho Alley Izakaya Hop 🍢", "desc": "Narrow lantern-lined alleyway beside Kamogawa river with grilled yakitori.", "cost": "$35", "tags": ["Nightlife", "Food"], "done": false }
+        ]
+      },
+      "4": {
+        "city": "Northern Kyoto (Kinkaku-ji)",
+        "hotel": "Ryokan Gion Sano (Tatami & Garden View)",
+        "morning": [
+          { "id": "m41", "time": "09:00 AM", "title": "Kinkaku-ji (The Golden Pavilion) ✨", "desc": "Marvel at the gold-leaf Zen temple shimmering over Kyoko-chi mirror pond.", "cost": "$5", "tags": ["Landmark"], "done": false },
+          { "id": "m42", "time": "11:00 AM", "title": "Ryoan-ji Famous Rock Garden", "desc": "Contemplate 15 mysterious stones arranged in raked white gravel.", "cost": "$5", "tags": ["Peaceful"], "done": false }
+        ],
+        "afternoon": [
+          { "id": "a41", "time": "01:00 PM", "title": "Nishiki Market Food Tasting 🦪", "desc": "Known as Kyoto’s Kitchen: skewered octopus, tamagoyaki egg, sweet dango.", "cost": "$20", "tags": ["Market"], "done": false }
+        ],
+        "evening": [
+          { "id": "e41", "time": "06:30 PM", "title": "Sunset along Kamogawa River Bank 🌅", "desc": "Join locals sitting spaced out along the gentle river enjoying pastries.", "cost": "Free", "tags": ["Chill"], "done": false }
+        ]
+      },
+      "5": {
+        "city": "Kyoto to Kansai / Farewell",
+        "hotel": "Check-out Morning",
+        "morning": [
+          { "id": "m51", "time": "09:00 AM", "title": "Ryokan Farewell Traditional Breakfast 🥣", "desc": "Miso soup, grilled salmon, tamagoyaki, and pickled plum.", "cost": "Included", "tags": ["Food"], "done": false },
+          { "id": "m52", "time": "10:30 AM", "title": "Philosopher’s Path Souvenir Shopping 🛍️", "desc": "Pick up chirimen cloth coin purses, washi tape, and yatsuhashi cookies.", "cost": "$40", "tags": ["Gifts"], "done": false }
+        ],
+        "afternoon": [
+          { "id": "a51", "time": "01:30 PM", "title": "Haruka Hello Kitty Express to Kansai Airport ✈️", "desc": "Cute themed scenic train ride directly to airport terminal.", "cost": "$22", "tags": ["Transit"], "done": false }
+        ],
+        "evening": [
+          { "id": "e51", "time": "05:00 PM", "title": "Airport Lounge & Scrapbook Journaling ✍️", "desc": "Paste all train stubs and ticket receipts into TravelMate journal!", "cost": "Free", "tags": ["Journal"], "done": false }
+        ]
+      }
+    }
+  },
+  "packing": {
+    "trip-kyoto": [
+      { "id": "p1", "cat": "clothes", "name": "Comfortable walking sneakers 👟", "done": true },
+      { "id": "p2", "cat": "clothes", "name": "Pastel cardigan & lightweight jacket 🧥", "done": true },
+      { "id": "p3", "cat": "clothes", "name": "3x linen tops & midi skirts 👗", "done": true },
+      { "id": "p4", "cat": "clothes", "name": "Slip-on socks for temple floors 🧦", "done": false },
+      { "id": "p5", "cat": "toiletries", "name": "Moisturizing sunscreen SPF50 🧴", "done": true },
+      { "id": "p6", "cat": "toiletries", "name": "Travel-size shampoo & conditioner 🫧", "done": true },
+      { "id": "p7", "cat": "toiletries", "name": "Pocket hand sanitizer & wipes 🧼", "done": false },
+      { "id": "p8", "cat": "toiletries", "name": "Lavender face mist & lip balm 🌸", "done": true },
+      { "id": "p9", "cat": "tech", "name": "Pocket Wi-Fi / e-SIM voucher 📱", "done": true },
+      { "id": "p10", "cat": "tech", "name": "Power bank & charging cables 🔋", "done": true },
+      { "id": "p11", "cat": "tech", "name": "Type A plug adapter for Japan 🔌", "done": false },
+      { "id": "p12", "cat": "tech", "name": "Vintage film camera + extra roll 📸", "done": true },
+      { "id": "p13", "cat": "docs", "name": "Passport with 6+ months validity 🛂", "done": true },
+      { "id": "p14", "cat": "docs", "name": "Printed hotel confirmation slips 📄", "done": false },
+      { "id": "p15", "cat": "docs", "name": "Japanese Yen Cash (coin pouch ready!) 💴", "done": true },
+      { "id": "p16", "cat": "docs", "name": "Travel Insurance policy printout 🩺", "done": false }
+    ]
+  },
+  "budget": {
+    "trip-kyoto": {
+      "total": 2500,
+      "currency": "$",
+      "expenses": [
+        { "id": "ex1", "name": "Ryokan 4 Nights Booking", "cat": "Stay", "amount": 750 },
+        { "id": "ex2", "name": "JR Haruka Airport Express Rail Pass", "cat": "Transport", "amount": 48 },
+        { "id": "ex3", "name": "Kaiseki Dinner in Gion", "cat": "Food", "amount": 110 },
+        { "id": "ex4", "name": "Matcha Tea Ceremony in Uji", "cat": "Activities", "amount": 50 },
+        { "id": "ex5", "name": "Fushimi Inari Wooden Shrine Charms", "cat": "Souvenirs", "amount": 35 },
+        { "id": "ex6", "name": "Arashiyama Monkey Park & Bamboo", "cat": "Activities", "amount": 15 },
+        { "id": "ex7", "name": "Nishiki Market Skewers & Sweets", "cat": "Food", "amount": 32 }
+      ]
+    }
+  }
+}

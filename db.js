@@ -1,160 +1,117 @@
 /**
- * TravelMate Minimal Persistent Database (IndexedDB)
- * Stores essential data:
- * - trips: destination, dates, budget, travellers, preferences
- * - itinerary: trip ID, day, city, hotel, activities
- * - packing: trip ID, items
- * - budget: trip ID, categories, amounts
+ * TravelMate Backend API Client (db.js)
+ * Connects frontend → backend → database → backend → frontend
+ * Minimal REST operations for Trips, Itinerary, Packing, and Budget
  */
 
 const TravelMateDB = (() => {
-  const DB_NAME = 'TravelMateDB';
-  const DB_VERSION = 1;
-  let dbInstance = null;
+  const API_BASE = '/api';
 
-  function openDB() {
-    return new Promise((resolve, reject) => {
-      if (dbInstance) {
-        return resolve(dbInstance);
+  async function request(endpoint, options = {}) {
+    try {
+      const res = await fetch(`${API_BASE}${endpoint}`, {
+        headers: { 'Content-Type': 'application/json' },
+        ...options
+      });
+      if (!res.ok) {
+        throw new Error(`HTTP ${res.status}: ${res.statusText}`);
       }
-      const request = indexedDB.open(DB_NAME, DB_VERSION);
-
-      request.onupgradeneeded = (event) => {
-        const db = event.target.result;
-
-        // 1. Trips store
-        if (!db.objectStoreNames.contains('trips')) {
-          db.createObjectStore('trips', { keyPath: 'id' });
-        }
-
-        // 2. Itinerary store (key: tripId_day)
-        if (!db.objectStoreNames.contains('itinerary')) {
-          const itStore = db.createObjectStore('itinerary', { keyPath: 'id' });
-          itStore.createIndex('tripId', 'tripId', { unique: false });
-        }
-
-        // 3. Packing store (key: tripId)
-        if (!db.objectStoreNames.contains('packing')) {
-          db.createObjectStore('packing', { keyPath: 'tripId' });
-        }
-
-        // 4. Budget store (key: tripId)
-        if (!db.objectStoreNames.contains('budget')) {
-          db.createObjectStore('budget', { keyPath: 'tripId' });
-        }
-      };
-
-      request.onsuccess = (event) => {
-        dbInstance = event.target.result;
-        resolve(dbInstance);
-      };
-
-      request.onerror = (event) => {
-        reject('IndexedDB Error: ' + event.target.errorCode);
-      };
-    });
+      return await res.json();
+    } catch (err) {
+      console.warn(`API call error on ${endpoint}:`, err);
+      throw err;
+    }
   }
 
-  function getStore(storeName, mode = 'readonly') {
-    return openDB().then(db => {
-      const tx = db.transaction(storeName, mode);
-      return tx.objectStore(storeName);
-    });
-  }
-
-  // --- Trips ---
+  // --- Trips: Create, View, Edit, Delete ---
   async function getAllTrips() {
-    const store = await getStore('trips', 'readonly');
-    return new Promise((resolve, reject) => {
-      const req = store.getAll();
-      req.onsuccess = () => resolve(req.result || []);
-      req.onerror = () => reject(req.error);
-    });
+    return await request('/trips', { method: 'GET' });
+  }
+
+  async function getTrip(tripId) {
+    return await request(`/trips/${encodeURIComponent(tripId)}`, { method: 'GET' });
   }
 
   async function saveTrip(trip) {
-    const store = await getStore('trips', 'readwrite');
-    return new Promise((resolve, reject) => {
-      const req = store.put(trip);
-      req.onsuccess = () => resolve(req.result);
-      req.onerror = () => reject(req.error);
+    // If trip exists, PUT to update; otherwise POST
+    try {
+      return await request(`/trips/${encodeURIComponent(trip.id)}`, {
+        method: 'PUT',
+        body: JSON.stringify(trip)
+      });
+    } catch {
+      return await request('/trips', {
+        method: 'POST',
+        body: JSON.stringify(trip)
+      });
+    }
+  }
+
+  async function createTrip(trip) {
+    return await request('/trips', {
+      method: 'POST',
+      body: JSON.stringify(trip)
     });
   }
 
-  // --- Itinerary ---
-  async function getTripItineraries(tripId) {
-    const store = await getStore('itinerary', 'readonly');
-    return new Promise((resolve, reject) => {
-      const index = store.index('tripId');
-      const req = index.getAll(tripId);
-      req.onsuccess = () => resolve(req.result || []);
-      req.onerror = () => reject(req.error);
+  async function editTrip(tripId, updates) {
+    return await request(`/trips/${encodeURIComponent(tripId)}`, {
+      method: 'PUT',
+      body: JSON.stringify(updates)
     });
   }
 
-  async function saveItineraryDay(tripId, day, data) {
-    const store = await getStore('itinerary', 'readwrite');
-    const record = {
-      id: `${tripId}_day_${day}`,
-      tripId,
-      day: parseInt(day),
-      city: data.city,
-      hotel: data.hotel,
-      morning: data.morning || [],
-      afternoon: data.afternoon || [],
-      evening: data.evening || []
-    };
-    return new Promise((resolve, reject) => {
-      const req = store.put(record);
-      req.onsuccess = () => resolve(req.result);
-      req.onerror = () => reject(req.error);
+  async function deleteTrip(tripId) {
+    return await request(`/trips/${encodeURIComponent(tripId)}`, {
+      method: 'DELETE'
     });
   }
 
-  // --- Packing ---
+  // --- Itinerary: Load & Save ---
+  async function getItinerary(tripId) {
+    return await request(`/trips/${encodeURIComponent(tripId)}/itinerary`, { method: 'GET' });
+  }
+
+  async function saveItinerary(tripId, itineraryData) {
+    return await request(`/trips/${encodeURIComponent(tripId)}/itinerary`, {
+      method: 'PUT',
+      body: JSON.stringify(itineraryData)
+    });
+  }
+
+  // --- Packing: Load & Save ---
   async function getPacking(tripId) {
-    const store = await getStore('packing', 'readonly');
-    return new Promise((resolve, reject) => {
-      const req = store.get(tripId);
-      req.onsuccess = () => resolve(req.result ? req.result.items : null);
-      req.onerror = () => reject(req.error);
-    });
+    return await request(`/trips/${encodeURIComponent(tripId)}/packing`, { method: 'GET' });
   }
 
   async function savePacking(tripId, items) {
-    const store = await getStore('packing', 'readwrite');
-    return new Promise((resolve, reject) => {
-      const req = store.put({ tripId, items });
-      req.onsuccess = () => resolve(req.result);
-      req.onerror = () => reject(req.error);
+    return await request(`/trips/${encodeURIComponent(tripId)}/packing`, {
+      method: 'PUT',
+      body: JSON.stringify(items)
     });
   }
 
-  // --- Budget ---
+  // --- Budget: Load & Save ---
   async function getBudget(tripId) {
-    const store = await getStore('budget', 'readonly');
-    return new Promise((resolve, reject) => {
-      const req = store.get(tripId);
-      req.onsuccess = () => resolve(req.result || null);
-      req.onerror = () => reject(req.error);
-    });
+    return await request(`/trips/${encodeURIComponent(tripId)}/budget`, { method: 'GET' });
   }
 
   async function saveBudget(tripId, budgetData) {
-    const store = await getStore('budget', 'readwrite');
-    return new Promise((resolve, reject) => {
-      const req = store.put({ tripId, ...budgetData });
-      req.onsuccess = () => resolve(req.result);
-      req.onerror = () => reject(req.error);
+    return await request(`/trips/${encodeURIComponent(tripId)}/budget`, {
+      method: 'PUT',
+      body: JSON.stringify(budgetData)
     });
   }
 
   return {
-    openDB,
     getAllTrips,
+    getTrip,
+    createTrip,
+    editTrip,
+    deleteTrip,
     saveTrip,
-    getTripItineraries,
-    saveItineraryDay,
+    getItinerary,
+    saveItinerary,
     getPacking,
     savePacking,
     getBudget,
