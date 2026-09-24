@@ -1,6 +1,6 @@
 /**
  * TravelMate - Cute Pastel Scrapbook Travel Planner
- * Functional Vanilla JS connected to Minimal Backend (server.js) & Database (database.json)
+ * Functional Vanilla JS connected to Minimal Backend (server.js), Database (database.json), & Groq AI
  */
 
 // ==========================================
@@ -154,7 +154,7 @@ async function loadTripDataFromDB(tripId, switchView = true) {
 
     if (switchView) {
       navigateTo('itinerary');
-      showToast(`🌸 Loaded ${trip.destination} from backend database!`);
+      showToast(`🌸 Loaded ${trip.destination} into your scrapbook!`);
     }
   } catch (err) {
     console.error('Error loading trip from backend:', err);
@@ -253,11 +253,11 @@ function showToast(msg) {
   toast.style.display = 'block';
   setTimeout(() => {
     toast.style.display = 'none';
-  }, 2800);
+  }, 3200);
 }
 
 // ==========================================
-// SECTION 2: PLAN / EDIT TRIP FORM
+// SECTION 2: PLAN / EDIT TRIP FORM (GROQ AI INTEGRATED)
 // ==========================================
 
 function setupPlanTripForm() {
@@ -338,9 +338,8 @@ function startEditTrip(tripId) {
   if (trip.accommodation) document.getElementById('accommodationSelect').value = trip.accommodation;
   if (trip.pace) document.getElementById('paceSelect').value = trip.pace;
 
-  // Change button text
-  const submitBtn = document.querySelector('#planTripForm button[type="submit"] span');
-  if (submitBtn) submitBtn.textContent = 'Update Trip in Database';
+  const submitBtnSpan = document.querySelector('#planTripForm button[type="submit"] span');
+  if (submitBtnSpan) submitBtnSpan.textContent = 'Update Trip in Database';
 
   showToast(`✏️ Editing ${trip.destination}! Update and submit to save.`);
 }
@@ -366,8 +365,12 @@ async function handleTripSubmit(e) {
   const end = new Date(ret);
   const diffDays = Math.max(1, Math.ceil((end - start) / (1000 * 60 * 60 * 24)));
 
+  const submitBtn = document.querySelector('#planTripForm button[type="submit"]');
+  const submitBtnSpan = submitBtn ? submitBtn.querySelector('span') : null;
+  const originalText = 'Save & Generate Scrapbook Itinerary';
+
+  // EDIT OPERATION
   if (state.editingTripId) {
-    // EDIT OPERATION (PUT /api/trips/:id)
     const tripId = state.editingTripId;
     const updatedTrip = {
       destination: dest,
@@ -384,78 +387,63 @@ async function handleTripSubmit(e) {
       accommodation: accommodation
     };
 
-    const saved = await TravelMateDB.editTrip(tripId, updatedTrip);
-    state.editingTripId = null;
+    try {
+      await TravelMateDB.editTrip(tripId, updatedTrip);
+      state.editingTripId = null;
+      if (submitBtnSpan) submitBtnSpan.textContent = originalText;
 
-    // Reset button text
-    const submitBtn = document.querySelector('#planTripForm button[type="submit"] span');
-    if (submitBtn) submitBtn.textContent = 'Save & Generate Scrapbook Itinerary';
-
-    await initializePersistentData();
-    await loadTripDataFromDB(tripId, true);
-    showToast(`✨ Trip to ${dest} updated in database!`);
+      await initializePersistentData();
+      await loadTripDataFromDB(tripId, true);
+      showToast(`✨ Trip to ${dest} updated in database!`);
+    } catch (err) {
+      showToast(`Error updating trip: ${err.message}`);
+    }
     return;
   }
 
-  // CREATE OPERATION (POST /api/trips)
-  const newTripId = 'trip-' + Date.now();
-  const newTrip = {
-    id: newTripId,
+  // CREATE TRIP WITH GROQ AI (/generate-trip)
+  const preferences = {
     destination: dest,
-    title: `${dest} Scrapbook Trip 🌸`,
-    dates: `${dep} to ${ret}`,
-    duration: `${diffDays} Days`,
-    status: 'upcoming',
-    hotel: `${accommodation} in ${dest.split(',')[0]}`,
-    pace: pace,
-    budget: `${currency}${budget.toLocaleString()}`,
+    departure: dep,
+    returnDate: ret,
+    duration: diffDays,
+    budget: budget,
     currency: currency,
     travellerType: travellerType,
     travellerCount: travellerCount,
     travelStyles: styles,
     accommodation: accommodation,
-    image: getRandomTripImage(dest),
-    tags: styles.length ? styles.map(s => '#' + s.split(' ')[0]) : ['#Adventure', '#Cute']
+    pace: pace
   };
 
-  // 1. Save trip to backend
-  await TravelMateDB.createTrip(newTrip);
+  // Basic Loading State
+  if (submitBtn) submitBtn.disabled = true;
+  if (submitBtnSpan) submitBtnSpan.textContent = '✨ Groq AI is crafting your pastel journey... 🌸';
 
-  // 2. Generate and save initial itinerary to backend
-  const newItin = generateDefaultItinerary(dest, newTrip.hotel, diffDays, currency);
-  await TravelMateDB.saveItinerary(newTripId, newItin);
+  try {
+    const result = await TravelMateDB.generateTrip(preferences);
 
-  // 3. Generate and save initial packing to backend
-  const newPacking = generateDefaultPacking();
-  await TravelMateDB.savePacking(newTripId, newPacking);
-
-  // 4. Generate and save initial budget to backend
-  const newBudget = {
-    total: budget,
-    currency: currency,
-    expenses: [
-      { id: 'ex_' + Date.now(), name: `${dest.split(',')[0]} Accommodation`, cat: 'Stay', amount: Math.round(budget * 0.4) }
-    ]
-  };
-  await TravelMateDB.saveBudget(newTripId, newBudget);
-
-  // Refresh trips and load new trip
-  state.trips.unshift(newTrip);
-  renderMyTrips();
-  await loadTripDataFromDB(newTripId, true);
-  showToast(`🎀 Trip to ${dest} created & saved in backend database!`);
-}
-
-function getRandomTripImage(dest) {
-  const d = dest.toLowerCase();
-  if (d.includes('paris') || d.includes('france')) {
-    return 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=700&q=80';
-  } else if (d.includes('santorini') || d.includes('greece') || d.includes('beach')) {
-    return 'https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=700&q=80';
-  } else if (d.includes('bali') || d.includes('indonesia')) {
-    return 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=700&q=80';
+    if (result && result.trip) {
+      state.trips.unshift(result.trip);
+      renderMyTrips();
+      await loadTripDataFromDB(result.trip.id, true);
+      showToast(`✨ Groq AI generated your trip to ${dest}! 🌸`);
+    } else {
+      throw new Error('Invalid response from AI generator');
+    }
+  } catch (err) {
+    console.error('AI Generation Error:', err);
+    showToast(`⚠️ AI Generation Notice: ${err.message}`);
+    // Basic retry handling
+    if (submitBtnSpan) submitBtnSpan.textContent = 'Retry Groq AI Generation 🔄';
+    if (submitBtn) submitBtn.disabled = false;
+    return;
+  } finally {
+    if (submitBtn && submitBtnSpan && submitBtnSpan.textContent.includes('Groq AI is crafting')) {
+      submitBtnSpan.textContent = originalText;
+      submitBtn.disabled = false;
+    }
   }
-  return 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=700&q=80';
 }
 
 function quickPlanDestination(destination, style, accommodation) {
@@ -533,7 +521,7 @@ function renderScheduleList(containerId, items, dayNumber, slot) {
         <h4 class="sched-name">${item.title}</h4>
         <p class="sched-desc">${item.desc}</p>
         <div class="sched-tags-row">
-          ${item.tags ? item.tags.map(t => `<span class="sched-tag">#${t}</span>`).join('') : ''}
+          ${item.tags ? item.tags.map(t => `<span class="sched-tag">${t.startsWith('#') ? t : '#' + t}</span>`).join('') : ''}
         </div>
       </div>
       <span class="sched-cost">${item.cost}</span>
@@ -545,7 +533,6 @@ async function toggleScheduleDone(dayNumber, slot, index) {
   if (state.itineraryDays[dayNumber] && state.itineraryDays[dayNumber][slot][index]) {
     state.itineraryDays[dayNumber][slot][index].done = !state.itineraryDays[dayNumber][slot][index].done;
     renderItineraryDay(dayNumber);
-    // Persist itinerary to backend
     await TravelMateDB.saveItinerary(state.currentTrip.id, state.itineraryDays);
     showToast('✨ Schedule saved to database!');
   }
@@ -577,9 +564,7 @@ async function addNewDayTab() {
     ]
   };
 
-  // Persist itinerary to backend
   await TravelMateDB.saveItinerary(state.currentTrip.id, state.itineraryDays);
-
   renderItineraryTabs();
   renderItineraryDay(nextDay);
   showToast(`🌸 Day ${nextDay} saved to backend database!`);
@@ -608,7 +593,6 @@ async function addCustomActivity(e) {
     done: false
   });
 
-  // Persist to backend database
   await TravelMateDB.saveItinerary(state.currentTrip.id, state.itineraryDays);
 
   document.getElementById('activityTitle').value = '';
@@ -827,7 +811,6 @@ async function deleteTripFromDB(tripId) {
     renderMyTrips();
     showToast('🗑️ Trip deleted from database!');
 
-    // If active trip was deleted, load next available trip
     if (state.currentTrip.id === tripId && state.trips.length > 0) {
       await loadTripDataFromDB(state.trips[0].id, false);
     }

@@ -1,7 +1,7 @@
 /**
  * TravelMate Backend API Client (db.js)
  * Connects frontend → backend → database → backend → frontend
- * Minimal REST operations for Trips, Itinerary, Packing, and Budget
+ * Minimal REST operations for Trips, Itinerary, Packing, Budget, and Groq AI Generator
  */
 
 const TravelMateDB = (() => {
@@ -14,13 +14,32 @@ const TravelMateDB = (() => {
         ...options
       });
       if (!res.ok) {
-        throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+        let errMessage = `HTTP ${res.status}: ${res.statusText}`;
+        try {
+          const errData = await res.json();
+          if (errData && errData.error) errMessage = errData.error;
+        } catch {}
+        throw new Error(errMessage);
       }
       return await res.json();
     } catch (err) {
       console.warn(`API call error on ${endpoint}:`, err);
       throw err;
     }
+  }
+
+  // --- Groq AI Trip Generator ---
+  async function generateTrip(preferences) {
+    const res = await fetch('/generate-trip', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(preferences)
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      throw new Error(data.error || `Failed to generate trip (Status ${res.status})`);
+    }
+    return data;
   }
 
   // --- Trips: Create, View, Edit, Delete ---
@@ -33,7 +52,6 @@ const TravelMateDB = (() => {
   }
 
   async function saveTrip(trip) {
-    // If trip exists, PUT to update; otherwise POST
     try {
       return await request(`/trips/${encodeURIComponent(trip.id)}`, {
         method: 'PUT',
@@ -104,6 +122,7 @@ const TravelMateDB = (() => {
   }
 
   return {
+    generateTrip,
     getAllTrips,
     getTrip,
     createTrip,
