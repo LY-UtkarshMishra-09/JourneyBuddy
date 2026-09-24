@@ -6,7 +6,15 @@
   "scripts": {
     "start": "node server.js"
   },
-  "keywords": ["travel", "planner", "scrapbook", "journeybuddy"],
+  "keywords": [
+    "travel",
+    "planner",
+    "scrapbook",
+    "journeybuddy"
+  ],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@vercel/analytics": "^2.0.1"
+  }
 }
