@@ -1,6 +1,31 @@
 {
   "trips": [
     {
+      "id": "trip-1790267019165",
+      "destination": "Ayodhya, India",
+      "title": "Ayodhya ✨ Heritage & Flavors Getaway",
+      "dates": "2026-10-08 to 2026-10-13",
+      "duration": "5 Days",
+      "status": "upcoming",
+      "hotel": "Madhur Boutique Heritage Inn",
+      "pace": "Balanced",
+      "budget": "₹2,50,000",
+      "currency": "₹",
+      "travellerType": "friends",
+      "travellerCount": 2,
+      "travelStyles": [
+        "Cultural & Historic",
+        "Foodie Trail"
+      ],
+      "accommodation": "Boutique Hotel",
+      "image": "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=700&q=80",
+      "tags": [
+        "#CulturalVibes",
+        "#FoodieFriends",
+        "#BalancedPace"
+      ]
+    },
+    {
       "id": "trip-1790266516241",
       "destination": "Ayodhya, India",
       "title": "Ayodhya ✨ Heritage Hop",
@@ -642,6 +667,238 @@
         ],
         "evening": []
       }
+    },
+    "trip-1790267019165": {
+      "1": {
+        "city": "Ayodhya",
+        "hotel": "Madhur Boutique Heritage Inn",
+        "morning": [
+          {
+            "id": "m1_1",
+            "time": "09:00 AM",
+            "title": "Ram Janmabhoomi Temple Tour 🛕",
+            "desc": "Guided walk through the historic temple complex, learn legends and admire intricate carvings.",
+            "cost": "₹200",
+            "tags": [
+              "Cultural",
+              "Morning"
+            ],
+            "done": false
+          }
+        ],
+        "afternoon": [
+          {
+            "id": "a1_1",
+            "time": "01:30 PM",
+            "title": "Ayodhya Riverside Lunch 🍛",
+            "desc": "Savor traditional Awadhi thali at a riverside dhaba, complete with kebabs, biryani, and sweet jalebi.",
+            "cost": "₹500",
+            "tags": [
+              "Foodie",
+              "Lunch"
+            ],
+            "done": false
+          }
+        ],
+        "evening": [
+          {
+            "id": "e1_1",
+            "time": "07:00 PM",
+            "title": "Ganga Aarti at Saryu Ghat 🌅",
+            "desc": "Experience the serene evening aarti, lights and chants by the holy river.",
+            "cost": "₹0",
+            "tags": [
+              "Spiritual",
+              "Evening"
+            ],
+            "done": false
+          }
+        ]
+      },
+      "2": {
+        "city": "Ayodhya",
+        "hotel": "Madhur Boutique Heritage Inn",
+        "morning": [
+          {
+            "id": "m2_1",
+            "time": "08:30 AM",
+            "title": "Hanuman Garhi Trek 🚶‍♀️",
+            "desc": "Gentle trek up to the hilltop shrine, enjoy panoramic views of the city.",
+            "cost": "₹150",
+            "tags": [
+              "Adventure",
+              "Morning"
+            ],
+            "done": false
+          }
+        ],
+        "afternoon": [
+          {
+            "id": "a2_1",
+            "time": "12:30 PM",
+            "title": "Street Snack Hunt 🍢",
+            "desc": "Taste chaat, samosa, and the famous 'petha' from local stalls in the bustling market.",
+            "cost": "₹300",
+            "tags": [
+              "Foodie",
+              "Afternoon"
+            ],
+            "done": false
+          }
+        ],
+        "evening": [
+          {
+            "id": "e2_1",
+            "time": "06:30 PM",
+            "title": "Cultural Show at Ram Katha Hall 🎭",
+            "desc": "Watch a vibrant folk performance depicting episodes from Ramayana.",
+            "cost": "₹250",
+            "tags": [
+              "Culture",
+              "Evening"
+            ],
+            "done": false
+          }
+        ]
+      },
+      "3": {
+        "city": "Ayodhya",
+        "hotel": "Madhur Boutique Heritage Inn",
+        "morning": [
+          {
+            "id": "m3_1",
+            "time": "09:00 AM",
+            "title": "Museum of Ayodhya History 🏛️",
+            "desc": "Explore artifacts, ancient scripts, and photo archives showcasing the city's legacy.",
+            "cost": "₹100",
+            "tags": [
+              "Museum",
+              "Morning"
+            ],
+            "done": false
+          }
+        ],
+        "afternoon": [
+          {
+            "id": "a3_1",
+            "time": "01:00 PM",
+            "title": "Cooking Class: Awadhi Delicacies 🍽️",
+            "desc": "Hands‑on session learning to make kebabs and the iconic 'kesar peda' with a local chef.",
+            "cost": "₹800",
+            "tags": [
+              "Foodie",
+              "Workshop"
+            ],
+            "done": false
+          }
+        ],
+        "evening": [
+          {
+            "id": "e3_1",
+            "time": "08:00 PM",
+            "title": "Rooftop Dinner under Stars ✨",
+            "desc": "Romantic dinner at the hotel’s rooftop, featuring a curated menu of regional flavors.",
+            "cost": "₹1200",
+            "tags": [
+              "Dinner",
+              "Romantic"
+            ],
+            "done": false
+          }
+        ]
+      },
+      "4": {
+        "city": "Ayodhya",
+        "hotel": "Madhur Boutique Heritage Inn",
+        "morning": [
+          {
+            "id": "m4_1",
+            "time": "08:00 AM",
+            "title": "Sunrise Boat Ride on Saryu 🚣‍♂️",
+            "desc": "Peaceful early‑morning boat cruise, watch the sunrise reflect on the water.",
+            "cost": "₹250",
+            "tags": [
+              "Nature",
+              "Morning"
+            ],
+            "done": false
+          }
+        ],
+        "afternoon": [
+          {
+            "id": "a4_1",
+            "time": "12:00 PM",
+            "title": "Lunch at 'Madhur Rasoi' 🍲",
+            "desc": "Indulge in a set menu of slow‑cooked Awadhi biryani, dal makhani, and fresh salads.",
+            "cost": "₹600",
+            "tags": [
+              "Foodie",
+              "Lunch"
+            ],
+            "done": false
+          }
+        ],
+        "evening": [
+          {
+            "id": "e4_1",
+            "time": "07:30 PM",
+            "title": "Night Market Stroll 🛍️",
+            "desc": "Explore local crafts, buy souvenirs like brass lamps and hand‑woven scarves.",
+            "cost": "₹400",
+            "tags": [
+              "Shopping",
+              "Evening"
+            ],
+            "done": false
+          }
+        ]
+      },
+      "5": {
+        "city": "Ayodhya",
+        "hotel": "Madhur Boutique Heritage Inn",
+        "morning": [
+          {
+            "id": "m5_1",
+            "time": "09:30 AM",
+            "title": "Relaxing Spa & Yoga Session 🧘‍♀️",
+            "desc": "Morning yoga by the garden followed by a rejuvenating Ayurvedic massage.",
+            "cost": "₹900",
+            "tags": [
+              "Wellness",
+              "Morning"
+            ],
+            "done": false
+          }
+        ],
+        "afternoon": [
+          {
+            "id": "a5_1",
+            "time": "01:30 PM",
+            "title": "Farewell Lunch at 'Heritage Café' 🍛",
+            "desc": "Final feast featuring a blend of classic and modern Ayodhya dishes, perfect send‑off.",
+            "cost": "₹700",
+            "tags": [
+              "Foodie",
+              "Farewell"
+            ],
+            "done": false
+          }
+        ],
+        "evening": [
+          {
+            "id": "e5_1",
+            "time": "06:00 PM",
+            "title": "Check‑out & Evening Train to Delhi 🚂",
+            "desc": "Travel back to Delhi, reflecting on memories and planning the next adventure.",
+            "cost": "₹0",
+            "tags": [
+              "Transport",
+              "Evening"
+            ],
+            "done": false
+          }
+        ]
+      }
     }
   },
   "packing": {
@@ -792,6 +1049,62 @@
         "name": "Cash & cards 💳",
         "done": false
       }
+    ],
+    "trip-1790267019165": [
+      {
+        "id": "p1",
+        "cat": "clothes",
+        "name": "Light cotton shirts & tees 🌞",
+        "done": false
+      },
+      {
+        "id": "p2",
+        "cat": "clothes",
+        "name": "Comfortable jeans or linen pants 👖",
+        "done": false
+      },
+      {
+        "id": "p3",
+        "cat": "clothes",
+        "name": "Scarf or light shawl for temples 🧣",
+        "done": false
+      },
+      {
+        "id": "p4",
+        "cat": "toiletries",
+        "name": "Sunscreen SPF 30+ 🌞",
+        "done": false
+      },
+      {
+        "id": "p5",
+        "cat": "toiletries",
+        "name": "Hand sanitizer & wet wipes 🧴",
+        "done": false
+      },
+      {
+        "id": "p6",
+        "cat": "tech",
+        "name": "Portable charger 🔋",
+        "done": false
+      },
+      {
+        "id": "p7",
+        "cat": "tech",
+        "name": "Camera or smartphone for cute pics 📸",
+        "done": false
+      },
+      {
+        "id": "p8",
+        "cat": "docs",
+        "name": "ID proof & travel tickets 🎫",
+        "done": false
+      },
+      {
+        "id": "p9",
+        "cat": "docs",
+        "name": "Cash (₹) & digital wallet 💰",
+        "done": false
+      }
     ]
   },
   "budget": {
@@ -876,6 +1189,42 @@
           "name": "Souvenirs & Gifts",
           "cat": "Souvenirs",
           "amount": 20000
+        }
+      ]
+    },
+    "trip-1790267019165": {
+      "total": 250000,
+      "currency": "₹",
+      "expenses": [
+        {
+          "id": "ex1",
+          "name": "Stay booking",
+          "cat": "Stay",
+          "amount": 80000
+        },
+        {
+          "id": "ex2",
+          "name": "Food & Cafes",
+          "cat": "Food",
+          "amount": 45000
+        },
+        {
+          "id": "ex3",
+          "name": "Attractions & Entry",
+          "cat": "Activities",
+          "amount": 25000
+        },
+        {
+          "id": "ex4",
+          "name": "Local Transport",
+          "cat": "Transport",
+          "amount": 15000
+        },
+        {
+          "id": "ex5",
+          "name": "Souvenirs & Gifts",
+          "cat": "Souvenirs",
+          "amount": 15000
         }
       ]
     }
