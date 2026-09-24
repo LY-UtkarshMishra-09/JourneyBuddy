@@ -418,7 +418,7 @@ async function handleTripSubmit(e) {
 
   // Basic Loading State
   if (submitBtn) submitBtn.disabled = true;
-  if (submitBtnSpan) submitBtnSpan.textContent = '✨ Groq AI is crafting your pastel journey... 🌸';
+  if (submitBtnSpan) submitBtnSpan.textContent = '✨ JourneyBuddy is crafting your pastel journey... 🌸';
 
   try {
     const result = await JourneyBuddyDB.generateTrip(preferences);
@@ -427,7 +427,7 @@ async function handleTripSubmit(e) {
       state.trips.unshift(result.trip);
       renderMyTrips();
       await loadTripDataFromDB(result.trip.id, true);
-      showToast(`✨ Groq AI generated your trip to ${dest}! 🌸`);
+      showToast(`✨ JourneyBuddy generated your trip to ${dest}! 🌸`);
     } else {
       throw new Error('Invalid response from AI generator');
     }
@@ -435,11 +435,11 @@ async function handleTripSubmit(e) {
     console.error('AI Generation Error:', err);
     showToast(`⚠️ AI Generation Notice: ${err.message}`);
     // Basic retry handling
-    if (submitBtnSpan) submitBtnSpan.textContent = 'Retry Groq AI Generation 🔄';
+    if (submitBtnSpan) submitBtnSpan.textContent = 'Retry JourneyBuddy Generation 🔄';
     if (submitBtn) submitBtn.disabled = false;
     return;
   } finally {
-    if (submitBtn && submitBtnSpan && submitBtnSpan.textContent.includes('Groq AI is crafting')) {
+    if (submitBtn && submitBtnSpan && submitBtnSpan.textContent.includes('JourneyBuddy is crafting')) {
       submitBtnSpan.textContent = originalText;
       submitBtn.disabled = false;
     }

@@ -1,6 +1,31 @@
 {
   "trips": [
     {
+      "id": "trip-1790266516241",
+      "destination": "Ayodhya, India",
+      "title": "Ayodhya ✨ Heritage Hop",
+      "dates": "2026-10-08 to 2026-10-13",
+      "duration": "5 Days",
+      "status": "upcoming",
+      "hotel": "Madhurima Boutique Stay",
+      "pace": "Balanced",
+      "budget": "₹2,50,000",
+      "currency": "₹",
+      "travellerType": "friends",
+      "travellerCount": 2,
+      "travelStyles": [
+        "Cultural & Historic",
+        "Foodie Trail"
+      ],
+      "accommodation": "Boutique Hotel",
+      "image": "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=700&q=80",
+      "tags": [
+        "#Cultural",
+        "#Foodie",
+        "#FriendsTrip"
+      ]
+    },
+    {
       "id": "trip-kyoto",
       "destination": "Kyoto, Japan",
       "title": "Kyoto Cherry Blossom Dreams 🌸",
@@ -399,6 +424,224 @@
           }
         ]
       }
+    },
+    "trip-1790266516241": {
+      "1": {
+        "city": "Ayodhya",
+        "hotel": "Madhurima Boutique Stay",
+        "morning": [
+          {
+            "id": "m1_1",
+            "time": "09:30 AM",
+            "title": "Welcome Brunch 🍽️",
+            "desc": "Relax with a cozy brunch at the hotel garden, sampling local sweets and fresh juice.",
+            "cost": "₹800",
+            "tags": [
+              "Food",
+              "Morning"
+            ],
+            "done": false
+          }
+        ],
+        "afternoon": [
+          {
+            "id": "a1_1",
+            "time": "01:30 PM",
+            "title": "Ram Janmabhoomi Temple Tour 🛕",
+            "desc": "Guided visit to the sacred Ram Janmabhoomi complex, learning its rich history and legends.",
+            "cost": "₹500",
+            "tags": [
+              "Sightseeing",
+              "Culture"
+            ],
+            "done": false
+          }
+        ],
+        "evening": [
+          {
+            "id": "e1_1",
+            "time": "07:00 PM",
+            "title": "Ganga Sunset Walk 🌅",
+            "desc": "Stroll along the ghats of the Ganga, enjoy the golden hues and gentle breezes.",
+            "cost": "₹200",
+            "tags": [
+              "Relax",
+              "Scenery"
+            ],
+            "done": false
+          }
+        ]
+      },
+      "2": {
+        "city": "Ayodhya",
+        "hotel": "Madhurima Boutique Stay",
+        "morning": [
+          {
+            "id": "m2_1",
+            "time": "08:30 AM",
+            "title": "Ayodhya Heritage Walk 🚶‍♀️",
+            "desc": "Explore the ancient lanes, see historic gates and charming murals.",
+            "cost": "₹300",
+            "tags": [
+              "Walking",
+              "Culture"
+            ],
+            "done": false
+          }
+        ],
+        "afternoon": [
+          {
+            "id": "a2_1",
+            "time": "01:00 PM",
+            "title": "Sita Ki Rasoi Cooking Class 🍲",
+            "desc": "Hands‑on class learning to cook iconic Awadhi dishes with a local chef.",
+            "cost": "₹1,200",
+            "tags": [
+              "Food",
+              "Workshop"
+            ],
+            "done": false
+          }
+        ],
+        "evening": [
+          {
+            "id": "e2_1",
+            "time": "07:30 PM",
+            "title": "Street Food Night Market 🌙",
+            "desc": "Taste chaat, kachori, and jalebi at the bustling market stalls.",
+            "cost": "₹700",
+            "tags": [
+              "Food",
+              "Nightlife"
+            ],
+            "done": false
+          }
+        ]
+      },
+      "3": {
+        "city": "Ayodhya",
+        "hotel": "Madhurima Boutique Stay",
+        "morning": [
+          {
+            "id": "m3_1",
+            "time": "07:45 AM",
+            "title": "Hanuman Garhi Hike 🏞️",
+            "desc": "Gentle hike up to Hanuman Garhi for panoramic views and temple prayers.",
+            "cost": "₹400",
+            "tags": [
+              "Hike",
+              "Spiritual"
+            ],
+            "done": false
+          }
+        ],
+        "afternoon": [
+          {
+            "id": "a3_1",
+            "time": "02:00 PM",
+            "title": "Museum of Ayodhya History 🏺",
+            "desc": "Discover artifacts, manuscripts, and stories spanning centuries.",
+            "cost": "₹250",
+            "tags": [
+              "Museum",
+              "Education"
+            ],
+            "done": false
+          }
+        ],
+        "evening": [
+          {
+            "id": "e3_1",
+            "time": "08:00 PM",
+            "title": "Folk Music Dinner 🎶",
+            "desc": "Enjoy a dinner with live folk performances and traditional thalis.",
+            "cost": "₹1,500",
+            "tags": [
+              "Food",
+              "Culture"
+            ],
+            "done": false
+          }
+        ]
+      },
+      "4": {
+        "city": "Ayodhya",
+        "hotel": "Madhurima Boutique Stay",
+        "morning": [
+          {
+            "id": "m4_1",
+            "time": "09:00 AM",
+            "title": "Tulsi Smarak Garden Stroll 🌳",
+            "desc": "Relax among fragrant trees and ornamental ponds, perfect for photos.",
+            "cost": "₹150",
+            "tags": [
+              "Nature",
+              "Relax"
+            ],
+            "done": false
+          }
+        ],
+        "afternoon": [
+          {
+            "id": "a4_1",
+            "time": "01:30 PM",
+            "title": "Sweet Shop Tasting Tour 🍭",
+            "desc": "Sample famous Ayodhya mithais like peda, kalakand, and balushahi.",
+            "cost": "₹600",
+            "tags": [
+              "Food",
+              "Treat"
+            ],
+            "done": false
+          }
+        ],
+        "evening": [
+          {
+            "id": "e4_1",
+            "time": "06:30 PM",
+            "title": "Rooftop Tea & Chat ☕",
+            "desc": "Sip masala chai on the hotel rooftop while watching the city lights.",
+            "cost": "₹300",
+            "tags": [
+              "Relax",
+              "Beverage"
+            ],
+            "done": false
+          }
+        ]
+      },
+      "5": {
+        "city": "Ayodhya",
+        "hotel": "Madhurima Boutique Stay",
+        "morning": [
+          {
+            "id": "m5_1",
+            "time": "08:00 AM",
+            "title": "Souvenir Shopping & Farewell Breakfast 🛍️",
+            "desc": "Buy handcrafted items and enjoy a hearty breakfast before checkout.",
+            "cost": "₹1,000",
+            "tags": [
+              "Shopping",
+              "Food"
+            ],
+            "done": false
+          }
+        ],
+        "afternoon": [
+          {
+            "id": "a5_1",
+            "time": "12:30 PM",
+            "title": "Check‑out & Transfer to Airport 🚖",
+            "desc": "Private car to the nearest airport, with scenic stops along the way.",
+            "cost": "₹2,000",
+            "tags": [
+              "Transport"
+            ],
+            "done": false
+          }
+        ],
+        "evening": []
+      }
     }
   },
   "packing": {
@@ -499,6 +742,56 @@
         "name": "Travel Insurance policy printout 🩺",
         "done": false
       }
+    ],
+    "trip-1790266516241": [
+      {
+        "id": "p1",
+        "cat": "clothes",
+        "name": "Light sweater 🌤️",
+        "done": false
+      },
+      {
+        "id": "p2",
+        "cat": "clothes",
+        "name": "Comfortable walking shoes 👟",
+        "done": false
+      },
+      {
+        "id": "p3",
+        "cat": "toiletries",
+        "name": "Travel‑size sunscreen 🧴",
+        "done": false
+      },
+      {
+        "id": "p4",
+        "cat": "toiletries",
+        "name": "Moisturizer 🌿",
+        "done": false
+      },
+      {
+        "id": "p5",
+        "cat": "tech",
+        "name": "Portable charger 🔋",
+        "done": false
+      },
+      {
+        "id": "p6",
+        "cat": "tech",
+        "name": "Camera 📸",
+        "done": false
+      },
+      {
+        "id": "p7",
+        "cat": "docs",
+        "name": "Aadhaar & ID proof 🪪",
+        "done": false
+      },
+      {
+        "id": "p8",
+        "cat": "docs",
+        "name": "Cash & cards 💳",
+        "done": false
+      }
     ]
   },
   "budget": {
@@ -547,6 +840,42 @@
           "name": "Nishiki Market Skewers & Sweets",
           "cat": "Food",
           "amount": 32
+        }
+      ]
+    },
+    "trip-1790266516241": {
+      "total": 250000,
+      "currency": "₹",
+      "expenses": [
+        {
+          "id": "ex1",
+          "name": "Stay booking",
+          "cat": "Stay",
+          "amount": 120000
+        },
+        {
+          "id": "ex2",
+          "name": "Food & Cafes",
+          "cat": "Food",
+          "amount": 60000
+        },
+        {
+          "id": "ex3",
+          "name": "Attractions & Entry",
+          "cat": "Activities",
+          "amount": 30000
+        },
+        {
+          "id": "ex4",
+          "name": "Local Transport",
+          "cat": "Transport",
+          "amount": 20000
+        },
+        {
+          "id": "ex5",
+          "name": "Souvenirs & Gifts",
+          "cat": "Souvenirs",
+          "amount": 20000
         }
       ]
     }
