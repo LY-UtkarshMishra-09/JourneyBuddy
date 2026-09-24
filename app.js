@@ -1,5 +1,5 @@
 /**
- * TravelMate - Cute Pastel Scrapbook Travel Planner
+ * JourneyBuddy - Cute Pastel Scrapbook Travel Planner
  * Functional Vanilla JS connected to Minimal Backend (server.js), Database (database.json), & Groq AI
  */
 
@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 async function initializePersistentData() {
   try {
-    const storedTrips = await TravelMateDB.getAllTrips();
+    const storedTrips = await JourneyBuddyDB.getAllTrips();
 
     if (storedTrips && storedTrips.length > 0) {
       state.trips = storedTrips;
@@ -72,7 +72,7 @@ async function initializePersistentData() {
 
 async function loadTripDataFromDB(tripId, switchView = true) {
   try {
-    const trip = state.trips.find(t => t.id === tripId) || await TravelMateDB.getTrip(tripId);
+    const trip = state.trips.find(t => t.id === tripId) || await JourneyBuddyDB.getTrip(tripId);
     if (!trip) return;
 
     state.currentTrip = {
@@ -95,7 +95,7 @@ async function loadTripDataFromDB(tripId, switchView = true) {
 
     // Load Itinerary from backend
     try {
-      const itin = await TravelMateDB.getItinerary(tripId);
+      const itin = await JourneyBuddyDB.getItinerary(tripId);
       if (itin && Object.keys(itin).length > 0) {
         state.itineraryDays = itin;
       } else {
@@ -107,7 +107,7 @@ async function loadTripDataFromDB(tripId, switchView = true) {
 
     // Load Packing from backend
     try {
-      const packing = await TravelMateDB.getPacking(tripId);
+      const packing = await JourneyBuddyDB.getPacking(tripId);
       if (packing && packing.length > 0) {
         state.packingItems = packing;
       } else {
@@ -119,7 +119,7 @@ async function loadTripDataFromDB(tripId, switchView = true) {
 
     // Load Budget from backend
     try {
-      const bgt = await TravelMateDB.getBudget(tripId);
+      const bgt = await JourneyBuddyDB.getBudget(tripId);
       if (bgt && bgt.total) {
         state.budget = bgt;
       } else {
@@ -388,7 +388,7 @@ async function handleTripSubmit(e) {
     };
 
     try {
-      await TravelMateDB.editTrip(tripId, updatedTrip);
+      await JourneyBuddyDB.editTrip(tripId, updatedTrip);
       state.editingTripId = null;
       if (submitBtnSpan) submitBtnSpan.textContent = originalText;
 
@@ -421,7 +421,7 @@ async function handleTripSubmit(e) {
   if (submitBtnSpan) submitBtnSpan.textContent = '✨ Groq AI is crafting your pastel journey... 🌸';
 
   try {
-    const result = await TravelMateDB.generateTrip(preferences);
+    const result = await JourneyBuddyDB.generateTrip(preferences);
 
     if (result && result.trip) {
       state.trips.unshift(result.trip);
@@ -492,7 +492,7 @@ function renderItineraryDay(dayNumber) {
       { id: 'a_gen', time: '01:30 PM', title: 'Local Heritage Sightseeing & Photo Walk 📷', desc: 'Explore historic alleys and browse quaint souvenir shops.', cost: '$15', tags: ['Sightseeing'], done: false }
     ],
     evening: [
-      { id: 'e_gen', time: '07:00 PM', title: 'Cozy Dinner & Night Atmosphere 🌙', desc: 'Taste local delicacies and write in your TravelMate journal.', cost: '$25', tags: ['Dinner'], done: false }
+      { id: 'e_gen', time: '07:00 PM', title: 'Cozy Dinner & Night Atmosphere 🌙', desc: 'Taste local delicacies and write in your JourneyBuddy journal.', cost: '$25', tags: ['Dinner'], done: false }
     ]
   };
 
@@ -533,7 +533,7 @@ async function toggleScheduleDone(dayNumber, slot, index) {
   if (state.itineraryDays[dayNumber] && state.itineraryDays[dayNumber][slot][index]) {
     state.itineraryDays[dayNumber][slot][index].done = !state.itineraryDays[dayNumber][slot][index].done;
     renderItineraryDay(dayNumber);
-    await TravelMateDB.saveItinerary(state.currentTrip.id, state.itineraryDays);
+    await JourneyBuddyDB.saveItinerary(state.currentTrip.id, state.itineraryDays);
     showToast('✨ Schedule saved to database!');
   }
 }
@@ -564,7 +564,7 @@ async function addNewDayTab() {
     ]
   };
 
-  await TravelMateDB.saveItinerary(state.currentTrip.id, state.itineraryDays);
+  await JourneyBuddyDB.saveItinerary(state.currentTrip.id, state.itineraryDays);
   renderItineraryTabs();
   renderItineraryDay(nextDay);
   showToast(`🌸 Day ${nextDay} saved to backend database!`);
@@ -593,7 +593,7 @@ async function addCustomActivity(e) {
     done: false
   });
 
-  await TravelMateDB.saveItinerary(state.currentTrip.id, state.itineraryDays);
+  await JourneyBuddyDB.saveItinerary(state.currentTrip.id, state.itineraryDays);
 
   document.getElementById('activityTitle').value = '';
   document.getElementById('activityLocation').value = '';
@@ -647,14 +647,14 @@ async function togglePackItem(id) {
   if (item) {
     item.done = !item.done;
     renderPackingList();
-    await TravelMateDB.savePacking(state.currentTrip.id, state.packingItems);
+    await JourneyBuddyDB.savePacking(state.currentTrip.id, state.packingItems);
   }
 }
 
 async function deletePackItem(id) {
   state.packingItems = state.packingItems.filter(i => i.id !== id);
   renderPackingList();
-  await TravelMateDB.savePacking(state.currentTrip.id, state.packingItems);
+  await JourneyBuddyDB.savePacking(state.currentTrip.id, state.packingItems);
   showToast('🗑️ Item removed from database.');
 }
 
@@ -677,7 +677,7 @@ async function addPackingItem(e) {
 
   nameInput.value = '';
   renderPackingList();
-  await TravelMateDB.savePacking(state.currentTrip.id, state.packingItems);
+  await JourneyBuddyDB.savePacking(state.currentTrip.id, state.packingItems);
   showToast('✏️ Packed item saved in database!');
 }
 
@@ -747,14 +747,14 @@ async function addExpenseLog(e) {
   document.getElementById('expenseAmount').value = '';
 
   renderBudget();
-  await TravelMateDB.saveBudget(state.currentTrip.id, state.budget);
+  await JourneyBuddyDB.saveBudget(state.currentTrip.id, state.budget);
   showToast('🪙 Purchase saved to database!');
 }
 
 async function deleteExpense(id) {
   state.budget.expenses = (state.budget.expenses || []).filter(e => e.id !== id);
   renderBudget();
-  await TravelMateDB.saveBudget(state.currentTrip.id, state.budget);
+  await JourneyBuddyDB.saveBudget(state.currentTrip.id, state.budget);
   showToast('Receipt deleted & updated in database!');
 }
 
@@ -765,6 +765,12 @@ async function deleteExpense(id) {
 function renderMyTrips(filter = 'all') {
   const container = document.getElementById('myTripsGrid');
   if (!container) return;
+
+  // Update filter pill label with actual count if present
+  const allPill = document.querySelector('.filter-pill[onclick*="all"]');
+  if (allPill) {
+    allPill.textContent = `All Journeys (${state.trips.length})`;
+  }
 
   let tripsToDisplay = state.trips;
   if (filter === 'upcoming') {
@@ -806,7 +812,7 @@ async function deleteTripFromDB(tripId) {
   if (!confirmed) return;
 
   try {
-    await TravelMateDB.deleteTrip(tripId);
+    await JourneyBuddyDB.deleteTrip(tripId);
     state.trips = state.trips.filter(t => t.id !== tripId);
     renderMyTrips();
     showToast('🗑️ Trip deleted from database!');
@@ -822,7 +828,7 @@ async function deleteTripFromDB(tripId) {
 function filterTrips(type) {
   const filterPills = document.querySelectorAll('.filter-pill');
   filterPills.forEach(p => p.classList.remove('active'));
-  if (window.event && window.event.target) {
+  if (window.event && window.event.target && window.event.target.classList.contains('filter-pill')) {
     window.event.target.classList.add('active');
   }
   renderMyTrips(type);

@@ -89,6 +89,46 @@ function getRandomTripImage(dest) {
   return 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=700&q=80';
 }
 
+// Normalize AI-generated packing items to match frontend categories
+function normalizePacking(rawPacking) {
+  const result = [];
+  let idCounter = 1;
+  const mapCategory = (cat) => {
+    const c = String(cat || '').toLowerCase();
+    if (c.includes('cloth') || c.includes('wear') || c.includes('shoe') || c.includes('outfit')) return 'clothes';
+    if (c.includes('toil') || c.includes('care') || c.includes('hygiene') || c.includes('beauty')) return 'toiletries';
+    if (c.includes('tech') || c.includes('gadget') || c.includes('elect') || c.includes('cord')) return 'tech';
+    if (c.includes('doc') || c.includes('money') || c.includes('pass') || c.includes('cash') || c.includes('card')) return 'docs';
+    return 'clothes';
+  };
+
+  if (Array.isArray(rawPacking)) {
+    rawPacking.forEach(item => {
+      if (typeof item === 'string') {
+        result.push({ id: 'p_' + idCounter++, cat: 'clothes', name: item, done: false });
+      } else if (item && typeof item === 'object') {
+        result.push({
+          id: item.id || ('p_' + idCounter++),
+          cat: mapCategory(item.cat || item.category),
+          name: item.name || item.item || 'Travel Item',
+          done: Boolean(item.done)
+        });
+      }
+    });
+  } else if (rawPacking && typeof rawPacking === 'object') {
+    Object.entries(rawPacking).forEach(([catKey, items]) => {
+      const mappedCat = mapCategory(catKey);
+      if (Array.isArray(items)) {
+        items.forEach(it => {
+          const name = typeof it === 'string' ? it : (it.name || it.item || 'Travel item');
+          result.push({ id: 'p_' + idCounter++, cat: mappedCat, name, done: false });
+        });
+      }
+    });
+  }
+  return result;
+}
+
 // --- Groq AI Trip Generator with Retry ---
 async function callGroqWithRetry(preferences, retries = 2) {
   const apiKey = process.env.XAI_API_KEY || process.env.GROQ_API_KEY;
@@ -99,7 +139,7 @@ async function callGroqWithRetry(preferences, retries = 2) {
   const endpoint = 'https://api.groq.com/openai/v1/chat/completions';
   const model = 'openai/gpt-oss-120b';
 
-  const systemPrompt = `You are TravelMate AI, an expert travel planner specializing in cute, aesthetic, thoughtful journeys.
+  const systemPrompt = `You are JourneyBuddy AI, an expert travel planner specializing in cute, aesthetic, thoughtful journeys.
 Generate a structured travel plan based strictly on the user's destination, dates, budget, travellers, travel styles, accommodation, and pace.
 You must return ONLY a valid JSON object matching this schema exactly:
 {
@@ -198,10 +238,19 @@ const MIME_TYPES = {
 };
 
 function serveStatic(req, res, pathname) {
-  let filePath = path.join(__dirname, pathname === '/' ? 'index.html' : pathname);
+  let safePath = pathname === '/' ? 'index.html' : pathname.replace(/^\/+/, '');
+  let filePath = path.join(__dirname, safePath);
   
+  // Security: Prevent directory traversal
   if (!filePath.startsWith(__dirname)) {
-    res.writeHead(403);
+    res.writeHead(403, { 'Content-Type': 'text/plain' });
+    return res.end('Forbidden');
+  }
+
+  // Security: Protect sensitive files like .env, .git, and database.json from static exposure
+  const baseName = path.basename(filePath);
+  if (baseName.startsWith('.') || baseName === 'database.json') {
+    res.writeHead(403, { 'Content-Type': 'text/plain' });
     return res.end('Forbidden');
   }
 
@@ -271,26 +320,70 @@ const server = http.createServer(async (req, res) => {
       };
 
       const itineraryMap = {};
-      if (Array.isArray(aiResult.days)) {
-        aiResult.days.forEach(d => {
-          itineraryMap[d.day] = {
+      const rawDays = aiResult.days;
+      if (Array.isArray(rawDays) && rawDays.length > 0) {
+        rawDays.forEach((d, idx) => {
+          const dayNum = d.day || (idx + 1);
+          itineraryMap[dayNum] = {
             city: d.city || preferences.destination,
             hotel: d.hotel || newTrip.hotel,
-            morning: d.morning || [],
-            afternoon: d.afternoon || [],
-            evening: d.evening || []
+            morning: Array.isArray(d.morning) ? d.morning : [],
+            afternoon: Array.isArray(d.afternoon) ? d.afternoon : [],
+            evening: Array.isArray(d.evening) ? d.evening : []
+          };
+        });
+      } else if (rawDays && typeof rawDays === 'object') {
+        Object.entries(rawDays).forEach(([key, d], idx) => {
+          const dayNum = parseInt(key) || (idx + 1);
+          itineraryMap[dayNum] = {
+            city: d.city || preferences.destination,
+            hotel: d.hotel || newTrip.hotel,
+            morning: Array.isArray(d.morning) ? d.morning : [],
+            afternoon: Array.isArray(d.afternoon) ? d.afternoon : [],
+            evening: Array.isArray(d.evening) ? d.evening : []
           };
         });
       }
 
-      const packingList = Array.isArray(aiResult.packing) && aiResult.packing.length > 0
-        ? aiResult.packing
-        : [];
+      // If itineraryMap is still empty, populate basic entries
+      if (Object.keys(itineraryMap).length === 0) {
+        for (let i = 1; i <= diffDays; i++) {
+          itineraryMap[i] = {
+            city: preferences.destination,
+            hotel: newTrip.hotel,
+            morning: [{ id: `m_${i}_1`, time: '09:00 AM', title: `Explore ${preferences.destination} 🥐`, desc: 'Morning walk and breakfast cafe.', cost: `${currency}15`, tags: ['Morning'], done: false }],
+            afternoon: [{ id: `a_${i}_1`, time: '02:00 PM', title: 'Highlight Sightseeing 🏛️', desc: 'Visit famous landmark and capture memories.', cost: `${currency}20`, tags: ['Sightseeing'], done: false }],
+            evening: [{ id: `e_${i}_1`, time: '07:30 PM', title: 'Cozy Dinner 🌙', desc: 'Savor regional specialties and relax.', cost: `${currency}30`, tags: ['Dinner'], done: false }]
+          };
+        }
+      }
 
-      const budgetData = aiResult.budget || {
+      const rawPacking = aiResult.packing;
+      let packingList = normalizePacking(rawPacking);
+      if (packingList.length === 0) {
+        packingList = [
+          { id: 'p_1', cat: 'clothes', name: 'Weather-appropriate comfortable outfits 👗', done: false },
+          { id: 'p_2', cat: 'clothes', name: 'Walking shoes 👟', done: false },
+          { id: 'p_3', cat: 'toiletries', name: 'Sunscreen & toiletries 🧴', done: false },
+          { id: 'p_4', cat: 'tech', name: 'Power bank & cables 🔋', done: false },
+          { id: 'p_5', cat: 'docs', name: 'Passport & Cards 🛂', done: false }
+        ];
+      }
+
+      const budgetData = aiResult.budget && typeof aiResult.budget === 'object' ? {
+        total: aiResult.budget.total || budgetNum,
+        currency: aiResult.budget.currency || currency,
+        expenses: Array.isArray(aiResult.budget.expenses) ? aiResult.budget.expenses : []
+      } : {
         total: budgetNum,
         currency: currency,
-        expenses: []
+        expenses: [
+          { id: 'ex_1', name: `${preferences.destination.split(',')[0]} Accommodation`, cat: 'Stay', amount: Math.round(budgetNum * 0.4) },
+          { id: 'ex_2', name: 'Food & Cafes', cat: 'Food', amount: Math.round(budgetNum * 0.25) },
+          { id: 'ex_3', name: 'Activities & Sightseeing', cat: 'Activities', amount: Math.round(budgetNum * 0.15) },
+          { id: 'ex_4', name: 'Local Transport', cat: 'Transport', amount: Math.round(budgetNum * 0.1) },
+          { id: 'ex_5', name: 'Souvenirs & Gifts', cat: 'Souvenirs', amount: Math.round(budgetNum * 0.1) }
+        ]
       };
 
       // Save to existing database
@@ -452,5 +545,5 @@ const server = http.createServer(async (req, res) => {
 });
 
 server.listen(PORT, () => {
-  console.log(`TravelMate backend listening on http://localhost:${PORT}`);
+  console.log(`JourneyBuddy backend listening on http://localhost:${PORT}`);
 });

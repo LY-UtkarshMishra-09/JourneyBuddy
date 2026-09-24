@@ -1,10 +1,10 @@
 /**
- * TravelMate Backend API Client (db.js)
+ * JourneyBuddy Backend API Client (db.js)
  * Connects frontend → backend → database → backend → frontend
  * Minimal REST operations for Trips, Itinerary, Packing, Budget, and Groq AI Generator
  */
 
-const TravelMateDB = (() => {
+const JourneyBuddyDB = (() => {
   const API_BASE = '/api';
 
   async function request(endpoint, options = {}) {

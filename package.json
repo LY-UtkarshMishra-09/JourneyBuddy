@@ -1,12 +1,12 @@
 {
-  "name": "travelmate",
+  "name": "journeybuddy",
   "version": "1.0.0",
-  "description": "Cute pastel scrapbook travel planner with minimal backend and database",
+  "description": "JourneyBuddy - Cute pastel scrapbook travel planner with minimal backend and database",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
   },
-  "keywords": ["travel", "planner", "scrapbook"],
+  "keywords": ["travel", "planner", "scrapbook", "journeybuddy"],
   "author": "",
   "license": "ISC"
 }
