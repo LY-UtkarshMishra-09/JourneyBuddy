@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Patrick+Hand&family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="dark-theme">
   <!-- Cute Floating Stickers in Background -->
   <div class="bg-doodles" aria-hidden="true">
     <span class="doodle d-1">🌸</span>
@@ -34,12 +34,20 @@
         </div>
       </a>
 
-      <!-- Mobile Menu Toggle -->
-      <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle Navigation">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
+      <!-- Header Actions (Theme Toggle & Mobile Menu) -->
+      <div class="header-actions">
+        <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Toggle dark/light mode" title="Switch Theme">
+          <span id="themeIcon">🌙</span>
+          <span id="themeText">Dark</span>
+        </button>
+
+        <!-- Mobile Menu Toggle -->
+        <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle Navigation">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
 
       <!-- Nav Links -->
       <nav class="nav-menu" id="navMenu">

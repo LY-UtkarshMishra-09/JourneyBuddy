@@ -46,6 +46,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   setupNavigation();
   setupPlanTripForm();
   setupMobileMenu();
+  setupThemeToggle();
 
   // Load persistent trips from backend database
   await initializePersistentData();
@@ -244,6 +245,38 @@ function setupMobileMenu() {
       navMenu.classList.toggle('show');
     });
   }
+}
+
+function setupThemeToggle() {
+  const toggleBtn = document.getElementById('themeToggleBtn');
+  
+  // Default to dark theme as requested, or load stored preference
+  const savedTheme = localStorage.getItem('jb_theme') || 'dark';
+  applyTheme(savedTheme);
+
+  if (toggleBtn) {
+    toggleBtn.addEventListener('click', () => {
+      const isDark = document.body.classList.contains('dark-theme');
+      const nextTheme = isDark ? 'light' : 'dark';
+      applyTheme(nextTheme);
+      showToast(nextTheme === 'dark' ? '🌙 Dark scrapbook theme activated!' : '☀️ Light scrapbook theme activated!');
+    });
+  }
+}
+
+function applyTheme(theme) {
+  const themeIcon = document.getElementById('themeIcon');
+  const themeText = document.getElementById('themeText');
+  if (theme === 'dark') {
+    document.body.classList.add('dark-theme');
+    if (themeIcon) themeIcon.textContent = '🌙';
+    if (themeText) themeText.textContent = 'Dark';
+  } else {
+    document.body.classList.remove('dark-theme');
+    if (themeIcon) themeIcon.textContent = '☀️';
+    if (themeText) themeText.textContent = 'Light';
+  }
+  localStorage.setItem('jb_theme', theme);
 }
 
 function showToast(msg) {
