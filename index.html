@@ -63,6 +63,92 @@
   <!-- MAIN APP CONTAINER (View Switching) -->
   <main class="main-content container">
 
+    <!-- Glassmorphism Page Skeleton Loader (Shown during AI & page loading) -->
+    <div id="pageSkeleton" class="page-skeleton-glass" style="display: none;" aria-live="polite">
+      <div class="skeleton-status-header">
+        <div class="skeleton-status-text">
+          <span class="skeleton-pulse-dot"></span>
+          <span id="skeletonStatusMsg">✨ JourneyBuddy is crafting your pastel journey... 🌸</span>
+        </div>
+        <div class="skeleton-status-indicator">
+          <span>Loading Scrapbook</span>
+          <span>⏳</span>
+        </div>
+      </div>
+
+      <!-- Skeleton Trip Banner -->
+      <div class="skeleton-card skeleton-banner glass-panel">
+        <div class="skeleton-shimmer skeleton-tag"></div>
+        <div class="skeleton-shimmer skeleton-title"></div>
+        <div class="skeleton-meta-row">
+          <div class="skeleton-shimmer skeleton-meta-pill"></div>
+          <div class="skeleton-shimmer skeleton-meta-pill"></div>
+          <div class="skeleton-shimmer skeleton-meta-pill"></div>
+        </div>
+      </div>
+
+      <!-- Skeleton Day Tabs -->
+      <div class="skeleton-tabs-row">
+        <div class="skeleton-shimmer skeleton-tab-item"></div>
+        <div class="skeleton-shimmer skeleton-tab-item"></div>
+        <div class="skeleton-shimmer skeleton-tab-item"></div>
+        <div class="skeleton-shimmer skeleton-tab-item"></div>
+        <div class="skeleton-shimmer skeleton-tab-item"></div>
+      </div>
+
+      <!-- Skeleton City/Hotel Meta Grid -->
+      <div class="skeleton-meta-grid">
+        <div class="skeleton-meta-card glass-panel">
+          <div class="skeleton-shimmer skeleton-circle-icon"></div>
+          <div class="skeleton-text-group">
+            <div class="skeleton-shimmer skeleton-line-sm"></div>
+            <div class="skeleton-shimmer skeleton-line-md"></div>
+          </div>
+        </div>
+        <div class="skeleton-meta-card glass-panel">
+          <div class="skeleton-shimmer skeleton-circle-icon"></div>
+          <div class="skeleton-text-group">
+            <div class="skeleton-shimmer skeleton-line-sm"></div>
+            <div class="skeleton-shimmer skeleton-line-md"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Skeleton Activity Cards (Morning, Afternoon, Evening) -->
+      <div class="skeleton-activities-grid">
+        <div class="skeleton-activity-card glass-panel">
+          <div class="skeleton-shimmer skeleton-activity-badge"></div>
+          <div class="skeleton-shimmer skeleton-activity-img"></div>
+          <div class="skeleton-shimmer skeleton-activity-text"></div>
+          <div class="skeleton-shimmer skeleton-activity-desc"></div>
+          <div class="skeleton-activity-tags">
+            <div class="skeleton-shimmer skeleton-tag-sm"></div>
+            <div class="skeleton-shimmer skeleton-tag-sm"></div>
+          </div>
+        </div>
+        <div class="skeleton-activity-card glass-panel">
+          <div class="skeleton-shimmer skeleton-activity-badge"></div>
+          <div class="skeleton-shimmer skeleton-activity-img"></div>
+          <div class="skeleton-shimmer skeleton-activity-text"></div>
+          <div class="skeleton-shimmer skeleton-activity-desc"></div>
+          <div class="skeleton-activity-tags">
+            <div class="skeleton-shimmer skeleton-tag-sm"></div>
+            <div class="skeleton-shimmer skeleton-tag-sm"></div>
+          </div>
+        </div>
+        <div class="skeleton-activity-card glass-panel">
+          <div class="skeleton-shimmer skeleton-activity-badge"></div>
+          <div class="skeleton-shimmer skeleton-activity-img"></div>
+          <div class="skeleton-shimmer skeleton-activity-text"></div>
+          <div class="skeleton-shimmer skeleton-activity-desc"></div>
+          <div class="skeleton-activity-tags">
+            <div class="skeleton-shimmer skeleton-tag-sm"></div>
+            <div class="skeleton-shimmer skeleton-tag-sm"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- ===================== SECTION 1: HOME ===================== -->
     <section id="view-home" class="view-section active">
       <!-- Hero Polaroid Showcase -->

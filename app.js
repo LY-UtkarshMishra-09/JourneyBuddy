@@ -416,9 +416,10 @@ async function handleTripSubmit(e) {
     pace: pace
   };
 
-  // Basic Loading State
+  // Basic Loading State with Glassmorphism Page Skeleton
   if (submitBtn) submitBtn.disabled = true;
   if (submitBtnSpan) submitBtnSpan.textContent = '✨ JourneyBuddy is crafting your pastel journey... 🌸';
+  showPageSkeleton(`✨ JourneyBuddy is crafting your pastel journey to ${dest}... 🌸`);
 
   try {
     const result = await JourneyBuddyDB.generateTrip(preferences);
@@ -427,11 +428,13 @@ async function handleTripSubmit(e) {
       state.trips.unshift(result.trip);
       renderMyTrips();
       await loadTripDataFromDB(result.trip.id, true);
+      hidePageSkeleton();
       showToast(`✨ JourneyBuddy generated your trip to ${dest}! 🌸`);
     } else {
       throw new Error('Invalid response from AI generator');
     }
   } catch (err) {
+    hidePageSkeleton();
     console.error('AI Generation Error:', err);
     showToast(`⚠️ AI Generation Notice: ${err.message}`);
     // Basic retry handling
@@ -439,10 +442,28 @@ async function handleTripSubmit(e) {
     if (submitBtn) submitBtn.disabled = false;
     return;
   } finally {
+    hidePageSkeleton();
     if (submitBtn && submitBtnSpan && submitBtnSpan.textContent.includes('JourneyBuddy is crafting')) {
       submitBtnSpan.textContent = originalText;
       submitBtn.disabled = false;
     }
+  }
+}
+
+function showPageSkeleton(message = '✨ JourneyBuddy is crafting your pastel journey... 🌸') {
+  const skeleton = document.getElementById('pageSkeleton');
+  const msgEl = document.getElementById('skeletonStatusMsg');
+  if (msgEl) msgEl.textContent = message;
+  if (skeleton) {
+    skeleton.style.display = 'block';
+    skeleton.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
+function hidePageSkeleton() {
+  const skeleton = document.getElementById('pageSkeleton');
+  if (skeleton) {
+    skeleton.style.display = 'none';
   }
 }
 
